@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 import time
 # from tqdm.auto import tqdm
-from progress.bar import IncrementalBar
+# from progress.bar import IncrementalBar
 print('*'*50)
 print('Welcome to Download File Organizer')
 print('created by Ahmed Tawfik')
@@ -23,7 +23,8 @@ dict_file_type={
 def final_files():
     files=list()
     for file in os.listdir(current_dir):
-        if file != os.path.basename(__file__) and file != 'env':
+        exe_file=Appname[0]+'.exe'
+        if file != os.path.basename(__file__) and file != exe_file:
             if not os.path.isdir(file):
                 files.append(file)
     return files
@@ -34,30 +35,33 @@ def orgnize(folder_name, filename):
         os.mkdir(folder_name)
     try:
         shutil.copy(filename,folder_name)
+        print(filename,'=======> Done')
         os.remove(filename)
-    except Exception as e:
-        print(e)
+    except :
+        pass
 def checking_files(dict_file_type,files):
-    bar = IncrementalBar('Organizing', max = len(files))
+    # bar = IncrementalBar('Organizing', max = len(files))
     for category , ext in dict_file_type.items():
         for filename in files:
             if filename !='clean_disk.py':
                 if filename.endswith(ext):
                     orgnize(category,filename)
-                    bar.next()
+                else:
+                    orgnize('General',filename)
 
-    bar.finish()
-if __name__=='__main__':
+
+    # bar.finish()
+
     
-    if len(files) != 0:
-        checking_files(dict_file_type,files)
-        print('Thank you for trying my Application')
-        print('if you find it useful please share it :)')
-        print('Bye ... Hope To See Again;) ')
-        print('You Were Using our app',Appname[0].replace('_',' '))
-    else:
-        print('Thank You For Choosing Us ')
-        print('No files to organize')
-        print('Bye ... Hope To See Again;) ')
-        print('You Were Using our app',Appname[0].replace('_',' '))
-
+if len(files) != 0:
+    checking_files(dict_file_type,files)
+    print('Thank you for trying my Application')
+    print('if you find it useful please share it :)')
+    print('Bye ... Hope To See Again;) ')
+    print('You Were Using our app',Appname[0].replace('_',' '))
+else:
+    print('Thank You For Choosing Us ')
+    print('No files to organize')
+    print('Bye ... Hope To See Again;) ')
+    print('You Were Using our app',Appname[0].replace('_',' '))
+time.sleep(10)
